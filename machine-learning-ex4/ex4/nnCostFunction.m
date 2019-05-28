@@ -73,6 +73,13 @@ a3 = sigmoid(a2*Theta2');
 y = repmat((1:num_labels), m, 1) == repmat(y, 1, num_labels);  
 J = (-1 / m) * sum(sum(y.*log(a3) + (1 - y).*log(1 - a3)));
 
+regTheta1 = Theta1(:,2:end);
+regTheta2 = Theta2(:,2:end);
+
+reg = (lambda/(2*m))*(sum(sum(regTheta1.^2))+sum(sum(regTheta2.^2)));
+
+J = J + reg;
+
 
 % Back propagration
 

@@ -62,8 +62,19 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+% Forward value
+a1 = [ones(m,1) X];
+a2 = sigmoid(a1*Theta1');
+a2 = [ones(m,1) a2];
+a3 = sigmoid(a2*Theta2');
+
+% Cost fun
+% transform the actual value into one hot mode [0,0, ..., 1,0]
+y = repmat((1:num_labels), m, 1) == repmat(y, 1, num_labels);  
+J = (-1 / m) * sum(sum(y.*log(a3) + (1 - y).*log(1 - a3)));
 
 
+% Back propagration
 
 
 

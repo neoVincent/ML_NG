@@ -24,7 +24,26 @@ sigma = 0.3;
 %
 
 
+choice = [0.01 0.03 0.1 0.3 1 3 10 30];
+minError = Inf;
+optC = Inf;
+optSigma = Inf;
 
+for i = 1:8
+    for j = 1:8
+        model = svmTrain(X,y, choice(i),@(x1,x2) gaussianKernel(x1,x2,choice(j)));
+        ypred = svmPredict(model,Xval);
+        error = mean(double(ypred ~= yval));
+        if error < minError
+            minError = error;
+            optC = choice(i);
+            optSigma = choice(j);
+        end
+    end
+end
+
+C = optC;
+sigma = optSigma;
 
 
 
